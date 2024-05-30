@@ -356,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               final dateTime =
                                   DateTime.fromMillisecondsSinceEpoch(
                                       dt! * 1000);
-                              final dayFormatter = DateFormat('dd MMM');
+                              final dayFormatter = DateFormat('EEE, dd MMM');
                               final dayFormattedDate =
                                   dayFormatter.format(dateTime);
                               final timeFormatter = DateFormat('HH:mm');
