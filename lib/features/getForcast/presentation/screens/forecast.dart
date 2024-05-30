@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:uza_point/common/widgets/loader.dart';
 import 'package:uza_point/features/getForcast/presentation/bloc/weather_focast_data_bloc.dart';
 
@@ -62,13 +63,17 @@ class _Next7DayWeatherState extends State<Next7DaysWeather> {
         child: BlocBuilder<WeatherFocastDataBloc, WeatherFocastDataState>(
           builder: (context, state) {
             if (state is WeatherFocastDataLoading) {
-            
               return const DefaultSkeleton();
             }
             if (state is WeatherFocastDataLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final focastData = state.foreCastData[index];
+                  DateTime dateTime = DateTime.parse(focastData.dt_txt ?? '');
+                  final dayFormatter = DateFormat('EEE, dd MMM');
+                  final dayFormattedDate = dayFormatter.format(dateTime);
+                  final timeFormatter = DateFormat('HH:mm');
+                  final formattedTime = timeFormatter.format(dateTime);
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.only(
@@ -78,7 +83,7 @@ class _Next7DayWeatherState extends State<Next7DaysWeather> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${focastData.dt_txt}',
+                              Text('$dayFormattedDate $formattedTime',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
